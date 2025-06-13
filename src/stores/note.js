@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
+
 export const useNoteStore = defineStore("notes", () => {
   //const API_URL = "https://ca0db754f7ab96d14001.free.beeceptor.com/api/notes/";
 
@@ -14,7 +15,7 @@ export const useNoteStore = defineStore("notes", () => {
 
       const response = await fetch(API_URL);
       const data = await response.json();
-      notes.value = data.reverse;
+      notes.value = data.reverse();
 
       loading.value = false;
     } catch (e) {
@@ -46,11 +47,25 @@ export const useNoteStore = defineStore("notes", () => {
     }
   };
 
+  const deleteNote = async (id) => {
+  try {
+    await fetch(`${API_URL}${id}`, {
+      method: "DELETE",
+    });
+    getNotes();
+  } catch (e) {
+    error.value = true;
+  }
+};
+
+
   return {
-    notes,
-    loading,
-    error,
-    getNotes,
-    addNote,
-  };
+  notes,
+  loading,
+  error,
+  getNotes,
+  addNote,
+  deleteNote, 
+};
+
 });

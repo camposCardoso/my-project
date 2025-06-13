@@ -9,7 +9,7 @@ const noteStore = useNoteStore();
 
 onMounted(async () => {
   await noteStore.getNotes();
-})
+});
 </script>
 
 <template>
@@ -22,9 +22,15 @@ onMounted(async () => {
     <h2 v-else-if="noteStore.error">Algo salió mal</h2>
     <ul v-else class="note-list">
       <li><CreateNote /></li>
-      <li v-for="note in noteStore.notes" :key="note.id">
-        <NoteCard :note="note"></NoteCard>
-      </li>
+      <li v-for="note in noteStore.notes" :key="note.id" class="note-item">
+  <div class="note-content">
+    <h3>{{ note.title }}</h3>
+  </div>
+  <button class="delete-btn" @click="noteStore.deleteNote(note.id)">
+    🗑️ Borrar
+  </button>
+</li>
+
       <li v-if="!noteStore.notes.length" class="empty-msg">
         <h2>No hay nada que mostrar. Crea tu primera nota!</h2>
       </li>
@@ -46,15 +52,15 @@ onMounted(async () => {
   }
 
   .page-title {
-  text-align: center;
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 30px;
-  color: white;
-}
-
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: white;
+  }
 
   .note-list {
+    align-items: center;
     list-style-type: none;
     padding: 0;
     margin: 0 auto;
@@ -62,7 +68,40 @@ onMounted(async () => {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 16px; 
+    gap: 16px;
+
+    .note-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2e2e2e;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  gap: 20px;
+}
+
+.note-content {
+  flex: 1;
+  color: white;
+  word-wrap: break-word;
+}
+
+.delete-btn {
+  background-color: #e74c3c;
+  border: none;
+  color: white;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+}
+
 
     .empty-msg {
       text-align: center;
