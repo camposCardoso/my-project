@@ -27,7 +27,7 @@ onMounted(async () => {
     <h3>{{ note.title }}</h3>
   </div>
   <button class="delete-btn" @click="noteStore.deleteNote(note.id)">
-    🗑️ Borrar
+    🗑️ Delete
   </button>
 </li>
 
