@@ -18,8 +18,8 @@ onMounted(async () => {
   <section id="notes-page">
     <h2 class="page-title">Notes</h2>
 
-    <h2 v-if="noteStore.loading">Cargando..</h2>
-    <h2 v-else-if="noteStore.error">Algo salió mal</h2>
+    <h2 v-if="noteStore.loading">Loading..</h2>
+    <h2 v-else-if="noteStore.error">Something went wrong</h2>
     <ul v-else class="note-list">
       <li><CreateNote /></li>
       <li v-for="note in noteStore.notes" :key="note.id" class="note-item">
@@ -32,7 +32,7 @@ onMounted(async () => {
 </li>
 
       <li v-if="!noteStore.notes.length" class="empty-msg">
-        <h2>No hay nada que mostrar. Crea tu primera nota!</h2>
+        <h2>There's nothing to show. Create your first note!</h2>
       </li>
     </ul>
   </section>
